@@ -27,9 +27,9 @@ const navLinks = [
 
 <template>
   <nav class="flex items-center justify-between w-full h-12 border border-black bg-white rounded-xl overflow-hidden">
-      <section class="flex items-center justify-center h-full w-32 bg-dark-orange ">
+      <RouterLink to="/welcome" class="cursor-pointer flex items-center justify-center h-full w-32 bg-dark-orange ">
         <span class="text-sm text-white font-medium">PASAR</span>
-      </section>
+      </RouterLink>
     <section class="divide-x divide-solid divide-black flex h-full w-fit border-l border-black">
         <NavLink v-for="(navLink, index) in navLinks"
                  :key="index"

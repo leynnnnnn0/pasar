@@ -4,7 +4,6 @@ import Paragraph from "../components/Paragraph.vue";
 import H1 from "../components/H1.vue";
 import BenefitsView from "./BenefitsView.vue";
 import FooterView from "./FooterView.vue";
-import PrimaryButton from "../components/PrimaryButton.vue";
 </script>
 
 <template>
@@ -22,7 +21,8 @@ import PrimaryButton from "../components/PrimaryButton.vue";
             Upload your class handouts and let our intelligent system generate custom exams to test your knowledge.
             Enhance your learning, track your progress, and ace your exams with Pasar!
           </paragraph>
-          <PrimaryButton title="Get Started"/>
+        <RouterLink to="/" class="hover:bg-secondary transition-colors duration-300 text-sm w-fit mt-5 px-5 shadow-thick shadow-secondary py-2 border border-black rounded-lg font-bold">
+          Get Started</RouterLink>
       </section>
     </div>
   </div>
