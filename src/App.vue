@@ -1,8 +1,14 @@
 <script setup>
-
+import HomeView from "./views/HomeView.vue";
+import AboutView from "./views/BenefitsView.vue";
+import FooterView from "./views/FooterView.vue";
 </script>
 
 <template>
-  <h1 class="font-bold text-2xl text-red-500">TEST</h1>
+  <div>
+    <HomeView/>
+    <AboutView/>
+    <FooterView/>
+  </div>
 </template>
 
