@@ -7,18 +7,27 @@ import {ref} from "vue";
 import UploadedFileInfo from "../components/UploadedFileInfo.vue";
 import { useToast } from "vue-toastification";
 
+
+
 const files = ref([]);
 const toast = useToast();
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file.type === 'application/pdf') {
     files.value.push(file);
+
   }else {
     toast.error("Only PDF file is allowed.", {
       timeout: 2000
     });
   }
 };
+const getMegaBytesSize = (bytes) => {
+  return parseFloat((bytes / (1024 * 1024)).toFixed(2));
+}
+const remove = (index) => {
+ files.value.splice(index, 1);
+}
 
 </script>
 
@@ -37,7 +46,12 @@ const handleFileUpload = (event) => {
             <img src="../assets/file-upload.svg" alt="file upload" class="h-10">
             <span class="underline">Click to upload file</span>
           </div>
-            <UploadedFileInfo v-for="(file, index) in files" :key="index" :fileName="file.name"/>
+            <UploadedFileInfo v-for="(file, index) in files"
+                              :key="index"
+                              :fileName="file.name"
+                              :mega-bytes="getMegaBytesSize(file.size).toString()"
+                              @some-event="remove(index)"
+            />
         </section>
         <PrimaryButton class="self-end" title="Generate an Exam"/>
       </div>
