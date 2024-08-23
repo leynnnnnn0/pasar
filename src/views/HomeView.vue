@@ -6,26 +6,44 @@ import PrimaryButton from "../components/PrimaryButton.vue";
 import {ref} from "vue";
 import UploadedFileInfo from "../components/UploadedFileInfo.vue";
 import { useToast } from "vue-toastification";
-
-
+import axios from "axios";
 
 const files = ref([]);
+const content = ref();
 const toast = useToast();
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file.type === 'application/pdf') {
     files.value.push(file);
-
+    file.value = file;
   }else {
     toast.error("Only PDF file is allowed.", {
       timeout: 2000
     });
   }
 };
+
+const generateExam = async () => {
+  const formData = new FormData();
+  files.value.forEach((file) => {
+    formData.append(`files[]`, file);
+  })
+
+  await axios.post('/api/upload-file', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+      .then(result => {
+        content.value = result.data.text;
+        console.log(result.data)
+      })
+      .catch(err => console.log(err));
+}
 const getMegaBytesSize = (bytes) => {
   return parseFloat((bytes / (1024 * 1024)).toFixed(2));
 }
-const remove = (index) => {
+const removeFile = (index) => {
  files.value.splice(index, 1);
 }
 
@@ -50,11 +68,12 @@ const remove = (index) => {
                               :key="index"
                               :fileName="file.name"
                               :mega-bytes="getMegaBytesSize(file.size).toString()"
-                              @some-event="remove(index)"
+                              @some-event="removeFile(index)"
             />
         </section>
-        <PrimaryButton class="self-end" title="Generate an Exam"/>
+        <PrimaryButton @click="generateExam()" class="self-end" title="Generate an Exam"/>
       </div>
+      <p v-text="content"></p>
     </section>
   </div>
 </template>
