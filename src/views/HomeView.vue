@@ -7,8 +7,8 @@ import {ref} from "vue";
 import UploadedFileInfo from "../components/UploadedFileInfo.vue";
 import { useToast } from "vue-toastification";
 import axios from "axios";
-import LoginForm from "../components/LoginForm.vue";
-import SignupForm from "../components/SignupForm.vue";
+import { CirclesToRhombusesSpinner } from 'epic-spinners'
+
 
 const files = ref([]);
 const content = ref();
@@ -38,10 +38,29 @@ const generateExam = async () => {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  }).then(result => {
-        content.value = result.data.text;
-        console.log(result.data)
-        isLoading.value = false;
+  }).then(async result => {
+        content.value = result.data;
+        const body = {
+          topic: content.value
+        }
+        await axios.post('http://localhost:8080/api/openai/test', body, {
+          'Content-Type': 'application/json'
+        }).then(result => {
+          console.log(result);
+          isLoading.value = false;
+          content.value = null;
+          files.value = [];
+          isDisabled.value = true;
+          toast.success("Your file is ready for download.", {
+            timeout: 5000
+          });
+        }).catch(err => {
+          console.log(err);
+          toast.error("Internal Service Error", {
+            timeout: 2000
+          });
+        })
+
       })
       .catch(err => {
         console.log(err)
@@ -62,7 +81,6 @@ const removeFile = (index) => {
   <div class="flex flex-col p-8 min-h-screen">
     <Navigation/>
     <section class="flex-1 flex flex-col items-center justify-center h-full w-full">
-      <p v-show="isLoading">LOADING</p>
       <div class="flex flex-col gap-4 p-5 min-h-96 w-96 bg-primary border border-black rounded-lg shadow-thick shadow-dark-orange">
         <section>
           <Title class="text-lg" title="Upload a PDF file"/>
@@ -81,9 +99,16 @@ const removeFile = (index) => {
                               @some-event="removeFile(index)"
             />
         </section>
-        <PrimaryButton :disabled="isLoading || isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" @click="generateExam()" class="self-end" title="Generate an Exam"/>
+        <PrimaryButton v-show="!isLoading" :disabled="isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" @click="generateExam()" class="self-end" title="Generate an Exam"/>
+        <PrimaryButton v-show="isLoading" :disabled="isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" class="self-end">
+          <circles-to-rhombuses-spinner
+              :animation-duration="1200"
+              :circles-num="3"
+              :circle-size="10"
+              color="#FF8D4D"
+          />
+        </PrimaryButton>
       </div>
-      <p v-text="content"></p>
     </section>
   </div>
 </template>
