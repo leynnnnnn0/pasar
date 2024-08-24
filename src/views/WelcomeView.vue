@@ -4,14 +4,31 @@ import Paragraph from "../components/Paragraph.vue";
 import H1 from "../components/H1.vue";
 import BenefitsView from "./BenefitsView.vue";
 import FooterView from "./FooterView.vue";
+import {ref} from "vue";
+import LoginForm from "../components/LoginForm.vue";
+import SignupForm from "../components/SignupForm.vue";
+const showLoginForm = ref(false);
+const showSignupForm = ref(false);
+
+const handleSignup = () => {
+  showSignupForm.value = !showSignupForm.value;
+}
+const handleLogin = () => {
+  showLoginForm.value = !showLoginForm.value;
+}
+
+
+
 </script>
 
 <template>
   <div class="flex flex-col p-8 min-h-screen">
-    <Navigation/>
+    <LoginForm v-show="showLoginForm" @hide-login="handleLogin()"/>
+    <SignupForm v-show="showSignupForm" @hide-signup="handleSignup()"/>
+    <Navigation @signup-button="handleSignup()" @login-button="handleLogin()"/>
     <div class="flex-1 flex items-center justify-center gap-10">
-      <section class="h-96 w-96 bg-secondary border border-black rounded-lg">
-      <!--  TODO image-->
+      <section class="p-5 h-96 w-96 bg-secondary border border-black rounded-lg">
+        <img src="/src/assets/home.svg" alt="">
       </section>
       <section class="flex flex-col w-[400px]">
           <span class="underline text-sm font-semibold">Welcome to Pasar</span>

@@ -14,14 +14,6 @@ const navLinks = [
     to: '/about-us',
     slot: 'About us'
   },
-  {
-    to: '/register',
-    slot: 'Register'
-  },
-  {
-    to: '/login',
-    slot: 'Login'
-  },
 ]
 </script>
 
@@ -34,8 +26,9 @@ const navLinks = [
         <NavLink v-for="(navLink, index) in navLinks"
                  :key="index"
                  :to="navLink.to"
-                 :slot="navLink.slot"
-                 :class="{'bg-secondary' : index === navLinks.length - 1}"/>
+                 :slot="navLink.slot"/>
+        <button @click="$emit('signupButton')" class="flex items-center justify-center h-full px-4 text-xs font-semibold">Signup</button>
+        <button @click="$emit('loginButton')" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Login</button>
     </section>
   </nav>
 </template>

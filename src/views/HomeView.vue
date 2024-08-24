@@ -7,12 +7,15 @@ import {ref} from "vue";
 import UploadedFileInfo from "../components/UploadedFileInfo.vue";
 import { useToast } from "vue-toastification";
 import axios from "axios";
+import LoginForm from "../components/LoginForm.vue";
+import SignupForm from "../components/SignupForm.vue";
 
 const files = ref([]);
 const content = ref();
 const toast = useToast();
 const isLoading = ref(false);
 const isDisabled = ref(true);
+
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file.type === 'application/pdf') {
