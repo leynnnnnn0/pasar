@@ -6,7 +6,7 @@ import H1 from "./H1.vue";
 </script>
 
 <template>
-  <div class="flex items-center justify-center w-full h-full absolute inset-0 bg-black/50">
+  <div class="z-10 flex items-center justify-center w-full h-full fixed inset-0 bg-black/50">
     <div class="relative space-y-3 h-auto w-80 bg-white rounded-lg shadow-lg p-5">
       <button @click="$emit('hideSignup')" class="absolute top-5 right-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">

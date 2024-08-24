@@ -3,10 +3,25 @@ import Paragraph from "./Paragraph.vue";
 import PrimaryButton from "./PrimaryButton.vue";
 import GoogleButton from "./GoogleButton.vue";
 import H1 from "./H1.vue";
+
+function navigate(url) {
+  window.location.href= url;
+}
+
+const auth = async () => {
+  const response = await fetch('http://localhost:8080/api/auth', {
+    method: 'POST'
+  });
+  const data = await response.json();
+  console.log(data);
+  navigate(data.url);
+  console.log(data);
+}
+
 </script>
 
 <template>
-  <div class="flex items-center justify-center w-full h-full absolute inset-0 bg-black/50">
+  <div class="z-10 flex items-center justify-center w-full h-full fixed inset-0 bg-black/50">
     <div class="relative space-y-3 h-auto w-80 bg-white rounded-lg shadow-lg p-5">
       <button @click="$emit('hideLogin')" class="absolute top-5 right-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -27,7 +42,7 @@ import H1 from "./H1.vue";
       </div>
       <Paragraph class="underline text-end">Forget Password?</Paragraph>
       <PrimaryButton class="w-full" title="Login" />
-      <GoogleButton>Login with Google</GoogleButton>
+      <GoogleButton @click="auth">Login with Google</GoogleButton>
     </div>
   </div>
 </template>

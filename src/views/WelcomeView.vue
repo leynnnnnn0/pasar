@@ -7,6 +7,7 @@ import FooterView from "./FooterView.vue";
 import {ref} from "vue";
 import LoginForm from "../components/LoginForm.vue";
 import SignupForm from "../components/SignupForm.vue";
+import PrimaryButton from "../components/PrimaryButton.vue";
 const showLoginForm = ref(false);
 const showSignupForm = ref(false);
 
@@ -16,7 +17,6 @@ const handleSignup = () => {
 const handleLogin = () => {
   showLoginForm.value = !showLoginForm.value;
 }
-
 
 
 </script>
@@ -38,8 +38,7 @@ const handleLogin = () => {
             Upload your class handouts and let our intelligent system generate custom exams to test your knowledge.
             Enhance your learning, track your progress, and ace your exams with Pasar!
           </paragraph>
-        <RouterLink to="/" class="hover:bg-secondary transition-colors duration-300 text-sm w-fit mt-5 px-5 shadow-thick shadow-secondary py-2 border border-black rounded-lg font-bold">
-          Get Started</RouterLink>
+        <PrimaryButton @click="handleLogin()" title="Get Started"/>
       </section>
     </div>
   </div>
