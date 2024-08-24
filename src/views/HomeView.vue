@@ -9,12 +9,12 @@ import { useToast } from "vue-toastification";
 import axios from "axios";
 import { CirclesToRhombusesSpinner } from 'epic-spinners'
 
-
 const files = ref([]);
 const content = ref();
 const toast = useToast();
 const isLoading = ref(false);
 const isDisabled = ref(true);
+const isExamGenerated = ref(false);
 
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
@@ -43,14 +43,16 @@ const generateExam = async () => {
         const body = {
           topic: content.value
         }
-        await axios.post('http://localhost:8080/api/openai/test', body, {
+        await axios.post('http://localhost:8080/api/openai/generate-questions', body, {
           'Content-Type': 'application/json'
         }).then(result => {
           console.log(result);
+          window.localStorage.setItem('examData', JSON.stringify(result.data));
           isLoading.value = false;
           content.value = null;
-          files.value = [];
           isDisabled.value = true;
+          isExamGenerated.value = true;
+          files.value = [];
           toast.success("Your file is ready for download.", {
             timeout: 5000
           });
@@ -66,6 +68,12 @@ const generateExam = async () => {
         console.log(err)
         isLoading.value = false;
       });
+
+  isLoading.value = false;
+}
+
+const proceedToExam= () => {
+  window.location.href =' http://localhost:3000/exam';
 }
 const getMegaBytesSize = (bytes) => {
   return parseFloat((bytes / (1024 * 1024)).toFixed(2));
@@ -88,9 +96,9 @@ const removeFile = (index) => {
         </section>
         <section class="flex-1 h-auto space-y-2">
           <div class="relative flex gap-2 items-center justify-center border border-dashed rounded-lg h-24 w-full">
-            <input @change="handleFileUpload" name="files" type="file"  class="absolute inset-0 opacity-0 h-full w-full cursor-pointer">
+            <input :disabled="isExamGenerated" @change="handleFileUpload" name="files" type="file"  class="absolute inset-0 opacity-0 h-full w-full cursor-pointer">
             <img src="../assets/file-upload.svg" alt="file upload" class="h-10">
-            <span class="underline">Click to upload file</span>
+            <span class="underline">{{ isExamGenerated ? 'Your Exam is Ready!' : 'Click to upload file'}}</span>
           </div>
             <UploadedFileInfo v-for="(file, index) in files"
                               :key="index"
@@ -99,8 +107,8 @@ const removeFile = (index) => {
                               @some-event="removeFile(index)"
             />
         </section>
-        <PrimaryButton v-show="!isLoading" :disabled="isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" @click="generateExam()" class="self-end" title="Generate an Exam"/>
-        <PrimaryButton v-show="isLoading" :disabled="isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" class="self-end">
+        <PrimaryButton v-show="!isLoading && !isExamGenerated" :disabled="isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" @click="generateExam()" class="self-end" title="Generate an Exam"/>
+        <PrimaryButton v-show="isLoading && !isExamGenerated" :disabled="isDisabled" :class="{ 'border-gray/50 text-gray/50 transition-none hover:bg-opacity-0' : isDisabled}" class="self-end">
           <circles-to-rhombuses-spinner
               :animation-duration="1200"
               :circles-num="3"
@@ -108,6 +116,7 @@ const removeFile = (index) => {
               color="#FF8D4D"
           />
         </PrimaryButton>
+        <PrimaryButton v-show="isExamGenerated"  @click="proceedToExam()" class="bg-secondary self-end" title="Proceed to Exam"/>
       </div>
     </section>
   </div>

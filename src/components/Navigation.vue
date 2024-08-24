@@ -7,12 +7,12 @@ const navLinks = [
     slot: 'Home'
   },
   {
-    to: '/benefits',
-    slot: 'Benefits'
+    to: '/pdf-to-exam',
+    slot: 'Generate Exam'
   },
   {
-    to: '/about-us',
-    slot: 'About us'
+    to: '/exam',
+    slot: 'Exam'
   },
 ]
 </script>
