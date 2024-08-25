@@ -20,12 +20,12 @@ const getCorrectAnswer = (answer, text) => {
 </script>
 
 <template>
-  <div class="p-8">
+  <div class="md:p-8 p-4">
     <Navigation/>
     <div class="flex justify-center w-full">
       <PrimaryButton @click="handleAnswers">{{ showAnswers ? 'Hide Answers' : 'Show Answers'}}</PrimaryButton>
     </div>
-    <div class="p-10 grid grid-cols-2 gap-5 max-w-[900px] mx-auto">
+    <div class="md:grid-cols-2 p-10 grid grid-cols-1 gap-5 max-w-[900px] mx-auto">
       <section class="space-y-5">
         <div v-for="(exam, index) in firstPart" :key="index">
           <Title :title="(index + 1 + '. ').toString() + exam.question"/>

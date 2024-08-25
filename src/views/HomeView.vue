@@ -89,7 +89,7 @@ const removeFile = (index) => {
   <div class="flex flex-col p-8 min-h-screen">
     <Navigation/>
     <section class="flex-1 flex flex-col items-center justify-center h-full w-full">
-      <div class="flex flex-col gap-4 p-5 min-h-96 w-96 bg-primary border border-black rounded-lg shadow-thick shadow-dark-orange">
+      <div class="flex flex-col gap-4 p-5 min-h-96 md:w-96 bg-primary border border-black rounded-lg shadow-thick shadow-dark-orange w-72">
         <section>
           <Title class="text-lg" title="Upload a PDF file"/>
           <Paragraph>Upload a pdf file to get started.</Paragraph>
