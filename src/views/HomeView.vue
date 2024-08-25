@@ -43,7 +43,7 @@ const generateExam = async () => {
         const body = {
           topic: content.value
         }
-        await axios.post('http://localhost:8080/api/openai/generate-questions', body, {
+        await axios.post('http://localhost:8080/api/openai/test', body, {
           'Content-Type': 'application/json'
         }).then(result => {
           console.log(result);
