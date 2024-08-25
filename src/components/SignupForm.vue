@@ -60,8 +60,7 @@ const handleLogin = () => {
     'Content-Type': 'application/json'
   }).then(result => {
     if(result.data.success){
-      window.localStorage.setItem('isAuthorized', JSON.stringify({ 'isAuthorized': true }));
-      window.localStorage.setItem('user', JSON.stringify(result.data.user));
+
     }
   })
       .catch(err => console.log(err))
