@@ -29,12 +29,12 @@ const handleLogin = () => {
 
 <template>
   <div class="flex flex-col p-8 md:min-h-screen h-screen">
-    <LoginForm v-show="showLoginForm" @hide-login="handleLogin()"/>
-    <SignupForm v-show="showSignupForm" @hide-signup="handleSignup()"/>
-    <Navigation @signup-button="handleSignup()" @login-button="handleLogin()"/>
+<!--    <LoginForm v-show="showLoginForm" @hide-login="handleLogin()"/>-->
+<!--    <SignupForm v-show="showSignupForm" @hide-signup="handleSignup()"/>-->
+    <Navigation />
     <div class="flex-1 flex items-center justify-center gap-10">
       <section class="p-5 h-96 w-96 bg-secondary border border-black rounded-lg md:block hidden">
-        <img src="/src/assets/home.svg" alt="">
+        <img src="/src/assets/home.svg" alt="logo">
       </section>
       <section class="flex flex-col w-[400px]">
           <span class="underline text-sm font-semibold md:text-left text-center">Welcome to Pasar</span>

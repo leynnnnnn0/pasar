@@ -30,6 +30,7 @@ const handleFileUpload = (event) => {
   }
 };
 const generateExam = async () => {
+  console.log('request');
   const formData = new FormData();
   files.value.forEach((file) => {
     formData.append(`pdfFiles`, file);
@@ -44,7 +45,7 @@ const generateExam = async () => {
         const body = {
           topic: content.value
         }
-        await axios.post('https://pasar-backend.onrender.com/api/openai/test', body, {
+        await axios.post('https://pasar-backend.onrender.com/api/openai/generate-questions', body, {
           'Content-Type': 'application/json'
         }).then(result => {
           window.localStorage.setItem('examData', JSON.stringify(result.data));
@@ -95,7 +96,7 @@ const removeFile = (index) => {
           <Paragraph>Upload a pdf file to get started.</Paragraph>
         </section>
         <section class="flex-1 h-auto space-y-2">
-          <div class="relative flex gap-2 items-center justify-center border border-dashed rounded-lg h-24 w-full" :class="isExamGenerated ? 'border-2 bg-secondary shadow-secondary' : ''">
+          <div class="relative flex gap-2 items-center justify-center border border-dashed rounded-lg h-24 w-full" :class="isExamGenerated ? 'border-2 bg-secondary shadow-secondary text-white' : ''">
             <input :disabled="isExamGenerated" @change="handleFileUpload" name="files" type="file"  class="absolute inset-0 opacity-0 h-full w-full cursor-pointer">
             <img src="../assets/file-upload.svg" alt="file upload" class="h-10">
             <span class="underline">{{ isExamGenerated ? 'Your Exam is Ready!' : 'Click to upload file'}}</span>
@@ -113,10 +114,10 @@ const removeFile = (index) => {
               :animation-duration="1200"
               :circles-num="3"
               :circle-size="10"
-              color="#FF8D4D"
+              color="#567DF4"
           />
         </PrimaryButton>
-        <PrimaryButton v-show="isExamGenerated"  @click="proceedToExam()" class="bg-secondary self-end" title="Proceed to Exam"/>
+        <PrimaryButton v-show="isExamGenerated"  @click="proceedToExam()" class="bg-secondary self-end text-white" title="Proceed to Exam"/>
       </div>
     </section>
   </div>

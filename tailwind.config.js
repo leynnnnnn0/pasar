@@ -8,9 +8,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#FFF5F0',
-        'secondary': '#FFAE80',
-        'dark-orange': '#FF8D4D',
+        'primary': '#EEF7FE',
+        'secondary': '#578EF5',
+        'dark-orange': '#567DF4',
         'gray': '#333333',
       },
       fontFamily: {
