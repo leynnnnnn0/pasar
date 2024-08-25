@@ -8,7 +8,9 @@ import UploadedFileInfo from "../components/UploadedFileInfo.vue";
 import { useToast } from "vue-toastification";
 import axios from "axios";
 import { CirclesToRhombusesSpinner } from 'epic-spinners'
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const files = ref([]);
 const content = ref();
 const toast = useToast();
@@ -51,7 +53,7 @@ const generateExam = async () => {
           isDisabled.value = true;
           isExamGenerated.value = true;
           files.value = [];
-          toast.success("Your file is ready for download.", {
+          toast.success("Your exam is ready.", {
             timeout: 5000
           });
         }).catch(err => {
@@ -71,7 +73,7 @@ const generateExam = async () => {
 }
 
 const proceedToExam= () => {
-  window.location.href =' http://localhost:3000/exam';
+  router.push('/exam');
 }
 const getMegaBytesSize = (bytes) => {
   return parseFloat((bytes / (1024 * 1024)).toFixed(2));
