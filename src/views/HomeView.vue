@@ -21,7 +21,6 @@ const handleFileUpload = (event) => {
   if (file.type === 'application/pdf') {
     files.value.push(file);
     isDisabled.value = files.value.length <= 0;
-    console.log(typeof files.value);
   }else {
     toast.error("Only PDF file is allowed.", {
       timeout: 2000
@@ -34,7 +33,7 @@ const generateExam = async () => {
     formData.append(`pdfFiles`, file);
   })
   isLoading.value = true;
-  await axios.post('/api/api/file/extract-text', formData, {
+  await axios.post('https://pasar-backend.onrender.com/api/file/extract-text', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -43,10 +42,9 @@ const generateExam = async () => {
         const body = {
           topic: content.value
         }
-        await axios.post('/api/api/openai/test', body, {
+        await axios.post('https://pasar-backend.onrender.com/api/openai/test', body, {
           'Content-Type': 'application/json'
         }).then(result => {
-          console.log(result);
           window.localStorage.setItem('examData', JSON.stringify(result.data));
           isLoading.value = false;
           content.value = null;
