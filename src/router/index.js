@@ -27,19 +27,5 @@ const router = createRouter({
 })
 
 // Add this navigation guard
-router.beforeEach((to, from, next) => {
-    const isAuthorized = JSON.parse(localStorage.getItem('isAuthorized')).isAuthorized || false;
-    console.log(isAuthorized)
-
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!isAuthorized) {
-            next({ name: 'welcome' });  // Redirect to welcome page if not authenticated
-        } else {
-            next();  // Proceed to route
-        }
-    } else {
-        next();  // Always allow access to public routes
-    }
-})
 
 export default router;
