@@ -1,8 +1,11 @@
 <script setup>
 import NavLink from "./NavLink.vue";
+import {useRoute} from "vue-router";
+
+const route = useRoute();
 
 
-const isAuthenticated = JSON.parse(window.localStorage.getItem('isAuthorized')).isAuthorized;
+
 const navLinks = [
   {
     to: '/',
@@ -18,9 +21,6 @@ const navLinks = [
   },
 ]
 
-const signOut = () => {
-  window.localStorage.setItem('isAuthorized', JSON.stringify({ 'isAuthorized': false }));
-}
 </script>
 
 <template>
@@ -32,10 +32,11 @@ const signOut = () => {
         <NavLink v-for="(navLink, index) in navLinks"
                  :key="index"
                  :to="navLink.to"
+                 :class="route.path === navLink.to ? 'bg-secondary' : ''"
                  :slot="navLink.slot"/>
-        <button v-show="!isAuthenticated" @click="$emit('signupButton')" class="flex items-center justify-center h-full px-4 text-xs font-semibold">Signup</button>
-        <button v-show="!isAuthenticated" @click="$emit('loginButton')" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Login</button>
-      <button v-show="isAuthenticated" @click="signOut" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Logout</button>
+<!--        <button v-show="!isAuthenticated" @click="$emit('signupButton')" class="flex items-center justify-center h-full px-4 text-xs font-semibold">Signup</button>-->
+<!--        <button v-show="!isAuthenticated" @click="$emit('loginButton')" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Login</button>-->
+<!--      <button v-show="isAuthenticated" @click="signOut" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Logout</button>-->
     </section>
     <section class="mr-5 md:hidden">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">

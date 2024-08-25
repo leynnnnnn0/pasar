@@ -34,7 +34,7 @@ const generateExam = async () => {
     formData.append(`pdfFiles`, file);
   })
   isLoading.value = true;
-  await axios.post('http://localhost:8080/api/file/extract-text', formData, {
+  await axios.post('/api/api/file/extract-text', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -43,7 +43,7 @@ const generateExam = async () => {
         const body = {
           topic: content.value
         }
-        await axios.post('http://localhost:8080/api/openai/test', body, {
+        await axios.post('/api/api/openai/test', body, {
           'Content-Type': 'application/json'
         }).then(result => {
           console.log(result);

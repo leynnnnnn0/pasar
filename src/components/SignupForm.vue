@@ -56,7 +56,7 @@ const handleLogin = () => {
     password: password
   }
 
-  axios.post('http://localhost:8080/api/user/create', data, {
+  axios.post('/api/api/user/create', data, {
     'Content-Type': 'application/json'
   }).then(result => {
     if(result.data.success){

@@ -14,7 +14,7 @@ function navigate(url) {
 }
 
 const auth = async () => {
-  const response = await fetch('http://localhost:8080/api/auth', {
+  const response = await fetch('/api/api/auth', {
     method: 'POST'
   });
   const data = await response.json();
@@ -34,7 +34,7 @@ const handleLogin = () => {
     password: form.password
   }
 
-  axios.post('http://localhost:8080/api/user/sign-in', data, {
+  axios.post('/api/api/user/sign-in', data, {
     'Content-Type': 'application/json'
   }).then(result => {
     if(result.data.success){
