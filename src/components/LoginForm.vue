@@ -3,6 +3,11 @@ import Paragraph from "./Paragraph.vue";
 import PrimaryButton from "./PrimaryButton.vue";
 import GoogleButton from "./GoogleButton.vue";
 import H1 from "./H1.vue";
+import {reactive} from "vue";
+import axios from "axios";
+import {useToast} from "vue-toastification";
+
+const toast = useToast();
 
 function navigate(url) {
   window.location.href= url;
@@ -16,6 +21,28 @@ const auth = async () => {
   console.log(data);
   navigate(data.url);
   console.log(data);
+}
+
+const form = reactive({
+  email: '',
+  password: ''
+})
+
+const handleLogin = () => {
+  const data = {
+    email: form.email,
+    password: form.password
+  }
+
+  axios.post('http://localhost:8080/api/user/sign-in', data, {
+    'Content-Type': 'application/json'
+  }).then(result => {
+    if(result.data.success){
+      window.localStorage.setItem('isAuthorized', JSON.stringify({ 'isAuthorized': true }));
+      window.localStorage.setItem('user', JSON.stringify(result.data.user));
+      toast.success(result.data.message);
+    }
+  }).catch(err => console.log(err))
 }
 
 </script>
@@ -34,14 +61,14 @@ const auth = async () => {
       </div>
       <div class="space-y-1">
         <Paragraph>Email address</Paragraph>
-        <input class="h-10 rounded-lg w-full border border-black/20" type="text">
+        <input v-model="form.email" class="p-2 h-10 rounded-lg w-full border border-black/20" type="text">
       </div>
       <div class="space-y-1">
         <Paragraph>Password</Paragraph>
-        <input class="h-10 rounded-lg w-full border border-black/20" type="text">
+        <input v-model="form.password" class="p-2 h-10 rounded-lg w-full border border-black/20" type="password">
       </div>
       <Paragraph class="underline text-end">Forget Password?</Paragraph>
-      <PrimaryButton class="w-full" title="Login" />
+      <PrimaryButton @click="handleLogin" class="w-full" title="Login" />
       <GoogleButton @click="auth">Login with Google</GoogleButton>
     </div>
   </div>

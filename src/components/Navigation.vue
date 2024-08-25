@@ -1,6 +1,8 @@
 <script setup>
 import NavLink from "./NavLink.vue";
 
+
+const isAuthenticated = JSON.parse(window.localStorage.getItem('isAuthorized')).isAuthorized;
 const navLinks = [
   {
     to: '/',
@@ -15,6 +17,10 @@ const navLinks = [
     slot: 'Exam'
   },
 ]
+
+const signOut = () => {
+  window.localStorage.setItem('isAuthorized', JSON.stringify({ 'isAuthorized': false }));
+}
 </script>
 
 <template>
@@ -27,8 +33,9 @@ const navLinks = [
                  :key="index"
                  :to="navLink.to"
                  :slot="navLink.slot"/>
-        <button @click="$emit('signupButton')" class="flex items-center justify-center h-full px-4 text-xs font-semibold">Signup</button>
-        <button @click="$emit('loginButton')" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Login</button>
+        <button v-show="!isAuthenticated" @click="$emit('signupButton')" class="flex items-center justify-center h-full px-4 text-xs font-semibold">Signup</button>
+        <button v-show="!isAuthenticated" @click="$emit('loginButton')" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Login</button>
+      <button v-show="isAuthenticated" @click="signOut" class="bg-secondary flex items-center justify-center h-full px-4 text-xs font-semibold">Logout</button>
     </section>
     <section class="mr-5 md:hidden">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">

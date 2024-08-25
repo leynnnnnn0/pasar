@@ -95,7 +95,7 @@ const removeFile = (index) => {
           <Paragraph>Upload a pdf file to get started.</Paragraph>
         </section>
         <section class="flex-1 h-auto space-y-2">
-          <div class="relative flex gap-2 items-center justify-center border border-dashed rounded-lg h-24 w-full">
+          <div class="relative flex gap-2 items-center justify-center border border-dashed rounded-lg h-24 w-full" :class="isExamGenerated ? 'border-2 bg-secondary shadow-secondary' : ''">
             <input :disabled="isExamGenerated" @change="handleFileUpload" name="files" type="file"  class="absolute inset-0 opacity-0 h-full w-full cursor-pointer">
             <img src="../assets/file-upload.svg" alt="file upload" class="h-10">
             <span class="underline">{{ isExamGenerated ? 'Your Exam is Ready!' : 'Click to upload file'}}</span>

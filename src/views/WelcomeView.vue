@@ -8,14 +8,24 @@ import {ref} from "vue";
 import LoginForm from "../components/LoginForm.vue";
 import SignupForm from "../components/SignupForm.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+
 const showLoginForm = ref(false);
 const showSignupForm = ref(false);
+
+const isAuthorized = JSON.parse(window.localStorage.getItem('isAuthorized')).isAuthorized;
 
 const handleSignup = () => {
   showSignupForm.value = !showSignupForm.value;
 }
 const handleLogin = () => {
   showLoginForm.value = !showLoginForm.value;
+}
+
+const getStarted = () => {
+  router.push('/pdf-to-exam')
 }
 
 
@@ -38,7 +48,7 @@ const handleLogin = () => {
             Upload your class handouts and let our intelligent system generate custom exams to test your knowledge.
             Enhance your learning, track your progress, and ace your exams with Pasar!
           </paragraph>
-        <PrimaryButton class="md:self-start self-center" @click="handleLogin()" title="Get Started"/>
+        <PrimaryButton class="md:self-start self-center" @click="isAuthorized ? getStarted() : handleLogin()" title="Get Started"/>
       </section>
     </div>
   </div>

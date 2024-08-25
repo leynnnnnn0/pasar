@@ -10,6 +10,7 @@ const router = createRouter({
             path: '/pdf-to-exam',
             name: 'pdf to exam',
             component: HomeView,
+            meta: {requiresAuth: true}
         },
         {
             path: '/',
@@ -20,7 +21,25 @@ const router = createRouter({
             path: '/exam',
             name: 'exam',
             component: ExamView,
+            meta: {requiresAuth: true}
         },
     ],
 })
+
+// Add this navigation guard
+router.beforeEach((to, from, next) => {
+    const isAuthorized = JSON.parse(localStorage.getItem('isAuthorized')).isAuthorized;
+    console.log(isAuthorized)
+
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!isAuthorized) {
+            next({ name: 'welcome' });  // Redirect to welcome page if not authenticated
+        } else {
+            next();  // Proceed to route
+        }
+    } else {
+        next();  // Always allow access to public routes
+    }
+})
+
 export default router;
