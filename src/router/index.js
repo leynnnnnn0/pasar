@@ -28,7 +28,7 @@ const router = createRouter({
 
 // Add this navigation guard
 router.beforeEach((to, from, next) => {
-    const isAuthorized = JSON.parse(localStorage.getItem('isAuthorized')).isAuthorized;
+    const isAuthorized = JSON.parse(localStorage.getItem('isAuthorized')).isAuthorized || false;
     console.log(isAuthorized)
 
     if (to.matched.some(record => record.meta.requiresAuth)) {
