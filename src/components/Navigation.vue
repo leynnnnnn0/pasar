@@ -37,13 +37,12 @@ const handleDisplayMenu = () => {
         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
       </svg>
     </button>
-    <NavLink v-for="(navLink, index) in navLinks"
-             :key="index"
-             :to="navLink.to"
-             class="h-fit text-4xl font-bold"
-              @click="handleDisplayMenu"
-             :class="route.path === navLink.to ? 'text-blue-300' : ''"
-             :slot="navLink.slot"/>
+    <RouterLink v-for="(navLink, index) in navLinks"
+                @click="handleDisplayMenu"
+                class="text-3xl font-bold drop-shadow-2xl"
+                :class="route.path === navLink.to ? 'text-blue-300' : ''"
+                :key="index"
+                :to="navLink.to">{{ navLink.slot }}</RouterLink>
   </div>
   <nav class="flex items-center justify-between min-w-full border border-black bg-white rounded-xl overflow-hidden md:h-12 h-10">
       <RouterLink to="/" class="cursor-pointer flex items-center justify-center h-full bg-dark-orange md:text-sm text-xs md:w-32 w-20">

@@ -5,8 +5,6 @@ import H1 from "../components/H1.vue";
 import BenefitsView from "./BenefitsView.vue";
 import FooterView from "./FooterView.vue";
 import {ref} from "vue";
-import LoginForm from "../components/LoginForm.vue";
-import SignupForm from "../components/SignupForm.vue";
 import PrimaryButton from "../components/PrimaryButton.vue";
 import {useRouter} from "vue-router";
 
